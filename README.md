@@ -12,9 +12,9 @@ Recharts(https://recharts.org/en-US)
 
 Place the RESAS API KEY in .env file in the base directory of the project
 
-REACT_APP_RESAS_API_KEY=<bold>Place Your API KEY here</bold>
-REACT_APP_PREF_URL="https://opendata.resas-portal.go.jp/api/v1/prefectures"
-REACT_APP_POPU_URL="https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?prefCode="
+REACT_APP_RESAS_API_KEY=**Place Your API KEY here** <br>
+REACT_APP_PREF_URL="https://opendata.resas-portal.go.jp/api/v1/prefectures" <br>
+REACT_APP_POPU_URL="https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?prefCode=" <br>
 
 ## How to run on local machine
 
