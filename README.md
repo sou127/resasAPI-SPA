@@ -4,7 +4,7 @@ This project was created using the [RESAS API](https://opendata.resas-portal.go.
 
 ## Used Libraries
 
-Recharts(https://recharts.org/en-US)
+[Recharts](https://recharts.org/en-US)
 
 ### `npm install recharts`
 
