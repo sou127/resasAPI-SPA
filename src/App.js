@@ -1,4 +1,13 @@
 import React, {useEffect, useState} from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend
+} from "recharts";
 import "./App.css";
 
 const requestOptions = {
@@ -6,12 +15,13 @@ const requestOptions = {
   headers: { "X-API-KEY": process.env.REACT_APP_RESAS_API_KEY },
 };
 
-function App() {
+export default function App() {
   const [prefecturesList, setPrefecturesList] = useState([]);
   const [checkedPrefectures, setCheckedPrefectures] = useState([]);
   const [plotData, setPlotData] = useState([]);
   const [refreshState, setRefreshState] = useState([1]);
 
+  // fetching Prefectures List
   useEffect(() => {
     fetch(process.env.REACT_APP_PREF_URL, requestOptions)
     .then(response => response.json())
@@ -21,6 +31,7 @@ function App() {
     .catch((err) => console.log(err));
   },[]);
 
+  // fetching checkedPrefectures and Population Data
   useEffect(() => {
       for(var i=0;i<checkedPrefectures.length;i++){
         var code = checkedPrefectures[i].prefCode;
@@ -30,6 +41,7 @@ function App() {
         .then((data) => {
           setPlotData([...plotData, 
             {
+              color: "red",
               prefCode: code,
               prefName: name,
               data: data.result.data[0].data,
@@ -39,6 +51,7 @@ function App() {
       }
   }, [refreshState]);
 
+  // oncheck handle function
   async function handleEvent (e) {
     if (e.target.checked) {
       setCheckedPrefectures([
@@ -79,24 +92,33 @@ function App() {
       </div>
 
       <div>
-          {plotData && plotData.map((record, pos) => {
-            return(
-              <div key={pos}>
-                {/* <div>{record.prefName} {record.prefCode}</div> */}
-                <div>{JSON.stringify(record)}</div>
-              </div>
-            );
-          })}
-{/* 
-           {checkedPrefectures && checkedPrefectures.map((record, pos) => {
-            return(
-              <div key={pos}>{record.prefCode}</div>
-            );
-          })}  */}
+        {plotData.length!==0 &&
+          <LineChart
+            width={500}
+            height={300}
+            margin={{
+              top: 20,
+              right: 30,
+              left: 20,
+              bottom: 10
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="year" type="year" allowDuplicatedCategory={false}/>
+            <YAxis>
+              {/* <Label value="総人口" position="outsideTopLeft" /> */}
+            </YAxis>
+            <Tooltip />
+            <Legend />
+              {plotData.map((record, pos) => {
+                return (
+                  <Line type="monotone" key={pos} data={record.data} name={record.prefName} dataKey="value" stroke={"#"+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6)} />
+                );
+              })}
+          </LineChart>
+        }
       </div>
 
     </div>
   );
 }
-
-export default App;
