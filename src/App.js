@@ -6,7 +6,8 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend
+  Legend,
+  ResponsiveContainer
 } from "recharts";
 import "./App.css";
 
@@ -91,8 +92,9 @@ export default function App() {
         })}
       </div>
 
-      <div>
+      <div className="graph-div">
         {plotData.length!==0 &&
+        <ResponsiveContainer width="95%" height={300}>
           <LineChart
             width={500}
             height={300}
@@ -104,8 +106,8 @@ export default function App() {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="year" type="year" allowDuplicatedCategory={false}/>
-            <YAxis>
+            <XAxis dataKey="year" type="year" allowDuplicatedCategory={false} />
+            <YAxis tickFormatter={(e) => {return (e/1000000);}}>
               {/* <Label value="総人口" position="outsideTopLeft" /> */}
             </YAxis>
             <Tooltip />
@@ -116,6 +118,7 @@ export default function App() {
                 );
               })}
           </LineChart>
+          </ResponsiveContainer>
         }
       </div>
 
